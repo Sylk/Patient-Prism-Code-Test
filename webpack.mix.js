@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const app_url = process.env.APP_URL
 
 /*
  |--------------------------------------------------------------------------
@@ -16,7 +17,8 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('postcss-import'),
         require('tailwindcss'),
     ])
-    .webpackConfig(require('./webpack.config'));
+    .webpackConfig(require('./webpack.config'))
+    .browserSync(app_url);
 
 if (mix.inProduction()) {
     mix.version();
