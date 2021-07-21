@@ -17946,6 +17946,102 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/CalcluationsTicker.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/CalcluationsTicker.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['calculations'],
+  methods: {
+    deleteCalculation: function deleteCalculation(calculationId) {
+      // console.log('Delete: ', calculationId)
+      this.$inertia["delete"](this.route('calculation.destroy', calculationId));
+    },
+    deleteCalculations: function deleteCalculations() {
+      // console.log('Delete users: ', this.user.id)
+      this.$inertia["delete"](this.route('calculation.wipe'));
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Calculator.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Calculator.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      currentEquation: '',
+      operators: ['*', '/', '+', '-']
+    };
+  },
+  methods: {
+    updateEquation: function updateEquation(value) {
+      var stringifyValue = value.toString();
+      var lastCharacter = this.currentEquation.substring(this.currentEquation.length - 1).toString(); // Console logs that allowed me to debug the logic
+      // console.log("Substring -2: ", lastCharacter)
+      // console.log("Current Equation: ", this.currentEquation)
+      // console.log("Current Char", this.operators.some(substring => stringifyValue.includes(substring)))
+      // console.log("Last Char", this.operators.some(substring => lastCharacter.includes(substring)))
+      // console.log("Length Determination: ", this.currentEquation.length - 1, this.currentEquation.length)
+      // console.log("Stringify Value: ", stringifyValue)
+      // console.log("Equation Length: ", this.currentEquation.length)
+      // If the last input was an operator & the next input is also an operator then replace the last input with the new input. So that we don't have two operators following each other.
+
+      if (this.operators.some(function (substring) {
+        return stringifyValue.includes(substring);
+      }) && this.operators.some(function (substring) {
+        return lastCharacter.includes(substring);
+      })) {
+        //Replace the last operator with the new operator
+        this.currentEquation = this.currentEquation.substring(0, this.currentEquation.length - 1) + stringifyValue; // If the equation is currently on it's first character & you put in operators first then just invalidate it
+      } else if (this.currentEquation.length === 0 && this.operators.some(function (substring) {
+        return stringifyValue.includes(substring);
+      })) {} else {
+        this.currentEquation += stringifyValue;
+        console.log("Else Current Equation: ", this.currentEquation);
+      }
+    },
+    submitEquation: function submitEquation() {
+      // console.log("Substring val:", this.currentEquation.substring(this.currentEquation.length))
+      // We need to validate that there is not an operator without a number to operate on
+      var lastCharacter = this.currentEquation.substring(this.currentEquation.length - 1);
+
+      if (this.currentEquation.length === 0 || this.operators.some(function (operator) {
+        return lastCharacter.includes(operator);
+      })) {// console.log('Last Character was invalid')
+      } else {
+        // console.log('Completed Equation: ', this.currentEquation)
+        this.$inertia.post('/calculate', this.$inertia.form({
+          equation: this.currentEquation
+        }));
+        this.currentEquation = '';
+      }
+    },
+    clearEquation: function clearEquation() {
+      this.currentEquation = '';
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/ActionMessage.vue?vue&type=script&lang=js":
 /*!******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Jetstream/ActionMessage.vue?vue&type=script&lang=js ***!
@@ -18617,11 +18713,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Jetstream/ApplicationLogo */ "./resources/js/Jetstream/ApplicationLogo.vue");
+/* harmony import */ var _Components_Calculator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Calculator */ "./resources/js/Components/Calculator.vue");
+/* harmony import */ var _Components_CalcluationsTicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/CalcluationsTicker */ "./resources/js/Components/CalcluationsTicker.vue");
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    JetApplicationLogo: _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_0__.default
-  }
+    JetApplicationLogo: _Jetstream_ApplicationLogo__WEBPACK_IMPORTED_MODULE_0__.default,
+    Calculator: _Components_Calculator__WEBPACK_IMPORTED_MODULE_1__.default,
+    CalculationsTicker: _Components_CalcluationsTicker__WEBPACK_IMPORTED_MODULE_2__.default
+  },
+  props: ['calculations']
 });
 
 /***/ }),
@@ -19250,7 +19353,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
     Welcome: _Jetstream_Welcome__WEBPACK_IMPORTED_MODULE_1__.default
-  }
+  },
+  props: ['calculations']
 });
 
 /***/ }),
@@ -19778,6 +19882,155 @@ __webpack_require__.r(__webpack_exports__);
     phpVersion: String
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/CalcluationsTicker.vue?vue&type=template&id=0ef47cf1":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/CalcluationsTicker.vue?vue&type=template&id=0ef47cf1 ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "overflow-y-auto ml-6"
+};
+var _hoisted_2 = {
+  "class": "grid grid-cols-3 gap-2"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "border rounded p-2 mb-4 hover:bg-red-200 active:bg-red-400 active:shadow-lg",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.deleteCalculations();
+    })
+  }, "Clear All"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.calculations, function (calculation, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["w-full pl-4 pr-4 hover:bg-red-200 active:bg-red-400 active:shadow-lg", index % 2 ? 'bg-green-200' : 'bg-yellow-200'],
+      key: calculation + index,
+      onClick: function onClick($event) {
+        return $options.deleteCalculation(calculation.id);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(calculation.equation) + " = " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(calculation.solution), 11
+    /* TEXT, CLASS, PROPS */
+    , ["onClick"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Calculator.vue?vue&type=template&id=475bb2e6":
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Calculator.vue?vue&type=template&id=475bb2e6 ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "grid grid-cols-4 gap-4"
+};
+var _hoisted_2 = {
+  "class": "col-span-4 w-full border rounded h-10 flex justify-center items-center"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.currentEquation), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.updateEquation(7);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "7"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $options.updateEquation(8);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "8"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return $options.updateEquation(9);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "9"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
+      return $options.updateEquation('*');
+    }),
+    "class": "w-16 border rounded p-2 bg-pink-100 hover:bg-pink-300 active:bg-pink-400 active:shadow-lg"
+  }, "*"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
+      return $options.updateEquation(4);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "4"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
+      return $options.updateEquation(5);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "5"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[7] || (_cache[7] = function ($event) {
+      return $options.updateEquation(6);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "6"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[8] || (_cache[8] = function ($event) {
+      return $options.updateEquation('/');
+    }),
+    "class": "w-16 border rounded p-2 bg-pink-100 hover:bg-pink-300 active:bg-pink-400 active:shadow-lg"
+  }, "÷"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[9] || (_cache[9] = function ($event) {
+      return $options.updateEquation(1);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "1"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[10] || (_cache[10] = function ($event) {
+      return $options.updateEquation(2);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "2"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[11] || (_cache[11] = function ($event) {
+      return $options.updateEquation(3);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "3"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[12] || (_cache[12] = function ($event) {
+      return $options.updateEquation('+');
+    }),
+    "class": "w-16 border rounded p-2 bg-pink-100 hover:bg-pink-300 active:bg-pink-400 active:shadow-lg"
+  }, "+"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[13] || (_cache[13] = function ($event) {
+      return $options.updateEquation(0);
+    }),
+    "class": "w-16 border rounded p-2 bg-indigo-100 hover:bg-indigo-300 active:bg-indigo-400 active:shadow-lg"
+  }, "0"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[14] || (_cache[14] = function ($event) {
+      return $options.clearEquation();
+    }),
+    "class": "w-16 border rounded p-2 bg-green-100 hover:bg-green-300 active:bg-green-400 active:shadow-lg"
+  }, "C"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[15] || (_cache[15] = function ($event) {
+      return $options.submitEquation();
+    }),
+    "class": "w-16 border rounded p-2 bg-pink-100 hover:bg-pink-300 active:bg-pink-400 active:shadow-lg"
+  }, "="), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[16] || (_cache[16] = function ($event) {
+      return $options.updateEquation('-');
+    }),
+    "class": "w-16 border rounded p-2 bg-pink-100 hover:bg-pink-300 active:bg-pink-400 active:shadow-lg"
+  }, "-")]);
+}
 
 /***/ }),
 
@@ -20968,23 +21221,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = {
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "p-6 sm:px-20 bg-white border-b border-gray-200"
-};
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "mt-8 text-2xl"
+}, " Welcome to your future proven calculator application! "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "mt-6 text-gray-500"
+}, " Us at CalcTek like to consider ourselves forward thinking, passionate and motivated. We've brought to you what we consider the next best thing to the web. The CalcTek click-o-matic functionality machine! We understand that Wolfram Alpha is considered a top dog, but they have too many features, we know that you users want just what you need & nothing else. ")], -1
+/* HOISTED */
+);
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "mt-8 text-2xl"
-}, " Welcome to your Jetstream application! ", -1
-/* HOISTED */
-);
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "mt-6 text-gray-500"
-}, " Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel ecosystem to be a breath of fresh air. We hope you love it. ", -1
-/* HOISTED */
-);
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "p-6"
@@ -21008,7 +21256,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   "class": "ml-12"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "mt-2 text-sm text-gray-500"
-}, " Laravel has wonderful documentation covering every aspect of the framework. Whether you're new to the framework or have previous experience, we recommend reading all of the documentation from beginning to end. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+}, " Calculators are hard to use, so we have you covered when it comes to documentation. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "https://laravel.com/docs"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "mt-3 flex items-center text-sm font-semibold text-indigo-700"
@@ -21023,66 +21271,6 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
   "clip-rule": "evenodd"
 })])])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "p-6 border-t border-gray-200 md:border-t-0 md:border-l"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "flex items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
-  fill: "none",
-  stroke: "currentColor",
-  "stroke-linecap": "round",
-  "stroke-linejoin": "round",
-  "stroke-width": "2",
-  viewBox: "0 0 24 24",
-  "class": "w-8 h-8 text-gray-400"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
-  d: "M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
-  d: "M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "ml-4 text-lg text-gray-600 leading-7 font-semibold"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "https://laracasts.com"
-}, "Laracasts")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "ml-12"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "mt-2 text-sm text-gray-500"
-}, " Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "https://laracasts.com"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "mt-3 flex items-center text-sm font-semibold text-indigo-700"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Start watching Laracasts"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "ml-1 text-indigo-500"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
-  viewBox: "0 0 20 20",
-  fill: "currentColor",
-  "class": "w-4 h-4"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
-  "fill-rule": "evenodd",
-  d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
-  "clip-rule": "evenodd"
-})])])])])])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "p-6 border-t border-gray-200"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "flex items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
-  fill: "none",
-  stroke: "currentColor",
-  "stroke-linecap": "round",
-  "stroke-linejoin": "round",
-  "stroke-width": "2",
-  viewBox: "0 0 24 24",
-  "class": "w-8 h-8 text-gray-400"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
-  d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "ml-4 text-lg text-gray-600 leading-7 font-semibold"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  href: "https://tailwindcss.com/"
-}, "Tailwind")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "ml-12"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "mt-2 text-sm text-gray-500"
-}, " Laravel Jetstream is built with Tailwind, an amazing utility first CSS framework that doesn't get in your way. You'll be amazed how easily you can build and maintain fresh, modern designs with this wonderful framework at your fingertips. ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "p-6 border-t border-gray-200 md:border-l"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "flex items-center"
@@ -21102,16 +21290,29 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   "class": "ml-12"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "mt-2 text-sm text-gray-500"
-}, " Authentication and registration views are included with Laravel Jetstream, as well as support for user email verification and resetting forgotten passwords. So, you're free to get started what matters most: building your application. ")])])], -1
+}, " We know how important it is, that you as a user can't access someone else calculations, so us here at CalcTek, have gone the extra mile to ensure that your calculations are only accessible by you. Don't worry you're in safe hands. ")])])], -1
 /* HOISTED */
 );
 
+var _hoisted_3 = {
+  "class": "grid grid-cols-2 mt-8 mb-4"
+};
+var _hoisted_4 = {
+  "class": "flex justify-center"
+};
+var _hoisted_5 = {
+  "class": "flex"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_jet_application_logo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-application-logo");
+  var _component_Calculator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Calculator");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_application_logo, {
-    "class": "block h-12 w-auto"
-  })]), _hoisted_2, _hoisted_3]), _hoisted_4]);
+  var _component_CalculationsTicker = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CalculationsTicker");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [_hoisted_1, _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Calculator)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CalculationsTicker, {
+    calculations: $props.calculations
+  }, null, 8
+  /* PROPS */
+  , ["calculations"])])])]);
 }
 
 /***/ }),
@@ -23061,7 +23262,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_1];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_welcome)])])])];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_welcome, {
+        calculations: $props.calculations
+      }, null, 8
+      /* PROPS */
+      , ["calculations"])])])])];
     }),
     _: 1
     /* STABLE */
@@ -48714,6 +48919,58 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/Components/CalcluationsTicker.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/Components/CalcluationsTicker.vue ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _CalcluationsTicker_vue_vue_type_template_id_0ef47cf1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CalcluationsTicker.vue?vue&type=template&id=0ef47cf1 */ "./resources/js/Components/CalcluationsTicker.vue?vue&type=template&id=0ef47cf1");
+/* harmony import */ var _CalcluationsTicker_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CalcluationsTicker.vue?vue&type=script&lang=js */ "./resources/js/Components/CalcluationsTicker.vue?vue&type=script&lang=js");
+
+
+
+_CalcluationsTicker_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _CalcluationsTicker_vue_vue_type_template_id_0ef47cf1__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_CalcluationsTicker_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/Components/CalcluationsTicker.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_CalcluationsTicker_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
+/***/ "./resources/js/Components/Calculator.vue":
+/*!************************************************!*\
+  !*** ./resources/js/Components/Calculator.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Calculator_vue_vue_type_template_id_475bb2e6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Calculator.vue?vue&type=template&id=475bb2e6 */ "./resources/js/Components/Calculator.vue?vue&type=template&id=475bb2e6");
+/* harmony import */ var _Calculator_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Calculator.vue?vue&type=script&lang=js */ "./resources/js/Components/Calculator.vue?vue&type=script&lang=js");
+
+
+
+_Calculator_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Calculator_vue_vue_type_template_id_475bb2e6__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_Calculator_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/Components/Calculator.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Calculator_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
 /***/ "./resources/js/Jetstream/ActionMessage.vue":
 /*!**************************************************!*\
   !*** ./resources/js/Jetstream/ActionMessage.vue ***!
@@ -49928,6 +50185,38 @@ _Welcome_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file
 
 /***/ }),
 
+/***/ "./resources/js/Components/CalcluationsTicker.vue?vue&type=script&lang=js":
+/*!********************************************************************************!*\
+  !*** ./resources/js/Components/CalcluationsTicker.vue?vue&type=script&lang=js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalcluationsTicker_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalcluationsTicker_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CalcluationsTicker.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/CalcluationsTicker.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/Components/Calculator.vue?vue&type=script&lang=js":
+/*!************************************************************************!*\
+  !*** ./resources/js/Components/Calculator.vue?vue&type=script&lang=js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Calculator_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Calculator_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Calculator.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Calculator.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Jetstream/ActionMessage.vue?vue&type=script&lang=js":
 /*!**************************************************************************!*\
   !*** ./resources/js/Jetstream/ActionMessage.vue?vue&type=script&lang=js ***!
@@ -50581,6 +50870,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Welcome_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Welcome.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=script&lang=js");
  
+
+/***/ }),
+
+/***/ "./resources/js/Components/CalcluationsTicker.vue?vue&type=template&id=0ef47cf1":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/Components/CalcluationsTicker.vue?vue&type=template&id=0ef47cf1 ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalcluationsTicker_vue_vue_type_template_id_0ef47cf1__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_CalcluationsTicker_vue_vue_type_template_id_0ef47cf1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./CalcluationsTicker.vue?vue&type=template&id=0ef47cf1 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/CalcluationsTicker.vue?vue&type=template&id=0ef47cf1");
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/Calculator.vue?vue&type=template&id=475bb2e6":
+/*!******************************************************************************!*\
+  !*** ./resources/js/Components/Calculator.vue?vue&type=template&id=475bb2e6 ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Calculator_vue_vue_type_template_id_475bb2e6__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Calculator_vue_vue_type_template_id_475bb2e6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Calculator.vue?vue&type=template&id=475bb2e6 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Components/Calculator.vue?vue&type=template&id=475bb2e6");
+
 
 /***/ }),
 
