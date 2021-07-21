@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CalculatorController;
+use App\Models\Calculation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,6 +26,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [CalculatorController::class, 'index'])->name('dashboard');
+
+Route::post('/calculate', [CalculatorController::class, 'store'])->name('calculation.store');
+Route::delete('/calculations/{calculation}', [CalculatorController::class, 'destroy'])->name('calculation.destroy');
+Route::delete('/calculations', [CalculatorController::class, 'wipe'])->name('calculation.wipe');
